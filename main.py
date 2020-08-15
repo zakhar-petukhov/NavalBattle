@@ -2,23 +2,23 @@ class ErrorMap(Exception):
     pass
 
 
-def validators(map):
-    arr = map.readlines()
+def validators(arr):
     count_horizontal_lines = len(arr)
     count_vertical_lines = len(arr[0].replace('\n', ''))
 
     for index in range(len(arr)):
-        count_symbols = len(arr[index])
+        count_symbols = len(arr[index].replace('\n', ''))
 
         if count_symbols != count_horizontal_lines and count_symbols < 1000 and len(
-                arr.replace('\n', '')) != count_vertical_lines:
+                arr) != count_vertical_lines:
             raise ErrorMap('Карта должна быть квадратом и меньше 1000 символов по горизонтале!')
 
 
 def search_ships():
     with open('ships.txt') as file:
-        # validators(file)
-        arr = tuple(map(tuple, file.readlines()))  # карта с кораблями
+        all_lines = file.readlines()
+        validators(all_lines)
+        arr = tuple(map(tuple, all_lines))  # карта с кораблями
 
     n = len(arr)  # длина строк и столбцов
     ship_counter = 0  # счетчик кораблей
